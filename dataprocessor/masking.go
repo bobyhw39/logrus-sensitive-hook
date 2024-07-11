@@ -1,4 +1,4 @@
-package dataprocessorimpl
+package dataprocessor
 
 import "strings"
 

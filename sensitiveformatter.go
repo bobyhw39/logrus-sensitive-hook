@@ -19,7 +19,7 @@ func (f *SensitiveFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	for k, v := range entry.Data {
 		rv := reflect.ValueOf(v)
 		if rv.Kind() == reflect.Struct {
-			maskedData := f.encryptSensitiveFields(rv)
+			maskedData := f.hideSensitiveFields(rv)
 			data[k] = maskedData
 		} else {
 			data[k] = v
@@ -30,7 +30,7 @@ func (f *SensitiveFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	return f.Formatter.Format(entry)
 }
 
-func (f *SensitiveFormatter) encryptSensitiveFields(rv reflect.Value) map[string]interface{} {
+func (f *SensitiveFormatter) hideSensitiveFields(rv reflect.Value) map[string]interface{} {
 	rt := rv.Type()
 	encryptedData := make(map[string]interface{})
 
